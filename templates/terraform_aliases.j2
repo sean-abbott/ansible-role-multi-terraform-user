@@ -1,0 +1,3 @@
+{% for v in terraform_download_list %}
+alias settf_{{ v['version'] }}='ln -sf ~/bin_alts/terraform/{{ v['version'] }}/terraform ~/bin/terraform'
+{% endfor %}

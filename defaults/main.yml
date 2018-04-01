@@ -1,0 +1,9 @@
+---
+tf_base_url: "https://releases.hashicorp.com/terraform"
+terraform_download_list:
+  - version: "0.11.2"
+    url: "{{ tf_base_url }}/0.11.2/terraform_0.11.2_linux_amd64.zip"
+    hash: "f728fa73ff2a4c4235a28de4019802531758c7c090b6ca4c024d48063ab8537b"
+  - version: "0.11.3"
+    url: "{{ tf_base_url }}/0.11.3/terraform_0.11.3_linux_amd64.zip"
+    hash: "6b8a7b83954597d36bbed23913dd51bc253906c612a070a21db373eab71b277b"

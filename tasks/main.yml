@@ -1,0 +1,35 @@
+---
+- name: "make ~/bin and ~/bin_alts directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "~/bin_alts/terraform"
+    - "~/bin"
+
+- name: "make terraform version directories" 
+  file:
+    path: "~/bin_alts/terraform/{{ item.version }}"
+    state: directory
+  with_items: "{{ terraform_download_list }}"
+
+- name: "get listed teraform versions"
+  get_url:
+    url: "{{ item.url }}"
+    sha256sum: "{{ item.hash }}"
+    dest: "~/bin_alts/terraform/{{ item.version }}/"
+  with_items: "{{ terraform_download_list }}"
+
+- name: "unzip terraform versions"
+  unarchive:
+    src: "~/bin_alts/terraform/{{ item.version }}/terraform_{{ item.version }}_linux_amd64.zip"
+    dest: "~/bin_alts/terraform/{{ item.version }}/"
+    remote_src: "yes"
+  with_items: "{{ terraform_download_list }}"
+
+- name: "add bash aliases to ~/.bashrc"
+  blockinfile:
+    dest: "~/.bashrc"
+    block: "{{ lookup('template', 'terraform_aliases.j2') }}"
+    marker: "# {mark} multi-terraform-user block"
+    backup: yes
